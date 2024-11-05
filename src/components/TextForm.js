@@ -28,6 +28,7 @@ export default function TextForm(props) {
     var text = document.getElementById('myBox');
     text.select();
     navigator.clipboard.writeText(text.value);
+    document.getSelection().removeAllRanges();
     props.showAlert("Copy All Text", "success");
 
   }
@@ -63,25 +64,25 @@ export default function TextForm(props) {
             rows="3"
           ></textarea>
         </div>
-        <button className="btn btn-primary mx-2" onClick={handleUpClick}>
+        <button disabled={text.length ===0} className="btn btn-primary mx-1 my-1" onClick={handleUpClick}>
           Convort to uppercase{" "}
         </button>
-        <button className="btn btn-primary" onClick={handleLoClick}>
+        <button disabled={text.length ===0} className="btn btn-primary mx-1 my-1" onClick={handleLoClick}>
           Convort to lowercase{" "}
         </button>&nbsp;
-        <button className="btn btn-primary" onClick={handleClearText}>
+        <button disabled={text.length ===0} className="btn btn-primary mx-1 my-1" onClick={handleClearText}>
             Clear Text{" "}
         </button>&nbsp;
-        <button className="btn btn-primary" onClick={handleCopy}>Copy Text</button>
+        <button disabled={text.length ===0} className="btn btn-primary mx-1 my-1" onClick={handleCopy}>Copy Text</button>
         &nbsp;
-        <button className="btn btn-primary" onClick={removeExtraSpace}>Remove Space</button>
+        <button disabled={text.length ===0} className="btn btn-primary mx-1 my-1" onClick={removeExtraSpace}>Remove Space</button>
       </div>
       <div className="container my-2">
         <h1>Your text summary</h1>
         <p>
-          {text.split(" ").length} word and {text.length} characters
+          {text.split(/\s+/).filter((element)=>{return element.length!==0}).length} words and {text.length} characters
         </p>
-        <p>{0.008 * text.split(" ").length} Minutes Read</p>
+        <p>{0.008 * text.split(" ").filter((element)=>{return element.length!==0}).length} Minutes Read</p>
         <h2>Preview</h2>
         <p>{text}</p>
       </div>
